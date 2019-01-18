@@ -1,0 +1,48 @@
+api_token: abcdefg  # GitHub's Personal Access Token
+api_token_kms: AQIABCDEFG==  # set this parameter if you use AWS KMS for api_token
+bot_id: 1  # [*optional | default:0] set user's id of `api_token`. if it is not set, api checks currenct user each time
+webhook_secret: abcdefg  # set this paramter if you set github webhook secret
+
+repository:
+  evalphobia/github-pr-checker:
+    files:
+    - name: "SQL files"
+      regexp:
+      - ".*\\.sql$"
+      comment: "SQL files are changed."
+      assignees:
+      - evalphobia
+      reviewers:
+      - evalphobia
+    - name: "Golang files"
+      regexp:
+      - "prchecker/.*\\.go$"
+      - "cmd/.*\\.go$"
+      comment: "Golang files are changed."
+      reviewers:
+      - evalphobia
+    - name: "Serverless config"
+      regexp:
+      - "serverless.*\\.yml"
+      comment: "Serverless config are changed.\n Please get checked by Reviewers."
+      reviewers:
+      - evalphobia
+    - name: "Makefile"
+      regexp:
+      - "Makefile$"
+      comment: "Makefile is changed."
+    - name: "Golang dependencies"
+      regexp:
+      - "Gopkg.lock$"
+      - "Gopkg.toml$"
+      comment: "Golang dependencies are changed."
+      reviewers:
+      - evalphobia
+  evalphobia/test-other-repository:
+    files:
+    - name: "JS files"
+      regexp:
+      - ".*\\.js$"
+      comment: "JS files are changed."
+      reviewers:
+      - evalphobia
