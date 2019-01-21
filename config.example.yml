@@ -19,6 +19,7 @@ repository:
       - "prchecker/.*\\.go$"
       - "cmd/.*\\.go$"
       comment: "Golang files are changed."
+      show_files: true
       reviewers:
       - evalphobia
     - name: "Serverless config"

@@ -84,13 +84,16 @@ func (c *pullRequestChecker) Do() error {
 	reviewers := &Assignees{}
 	for i := range repoConfig.Files {
 		rf := repoConfig.Files[i]
+		matchedFiles := make([]string, 0, len(changedFiles))
 		for _, f := range changedFiles {
 			if rf.Match(f) {
-				comment.Add(rf.GetComment())
-				assignees.Add(rf.Assignees...)
-				reviewers.Add(rf.Reviewers...)
-				break
+				matchedFiles = append(matchedFiles, f)
 			}
+		}
+		if len(matchedFiles) != 0 {
+			comment.Add(rf.GetComment(matchedFiles))
+			assignees.Add(rf.Assignees...)
+			reviewers.Add(rf.Reviewers...)
 		}
 	}
 

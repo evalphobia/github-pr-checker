@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"regexp"
+	"strings"
 	"sync"
 	"time"
 
@@ -162,6 +163,7 @@ type File struct {
 	Comment   string           `yaml:"comment"`
 	Assignees []string         `yaml:"assignees"`
 	Reviewers []string         `yaml:"reviewers"`
+	ShowFiles bool             `yaml:"show_files"`
 }
 
 // Init initializes regexp rules.
@@ -189,6 +191,9 @@ func (f *File) Match(path string) bool {
 }
 
 // GetComment gets comment.
-func (f *File) GetComment() string {
+func (f *File) GetComment(files []string) string {
+	if f.ShowFiles {
+		return fmt.Sprintf("[%s]\n%s\n- %s", f.Name, f.Comment, strings.Join(files, "\n- "))
+	}
 	return fmt.Sprintf("[%s]\n%s", f.Name, f.Comment)
 }
